@@ -72,8 +72,27 @@ class Config:
         :returns:
             Dict[str, Any]: Config Dict
         """
-
         return self._config.copy()
+
+    def get(self, key: str, default: Any = None) -> Any:
+        """
+        Get a config value
+        :param key : Configuration key
+        :param default: Default value if key not found. Defaults to None.
+        """
+        return self._config.get(key, default)
+
+    def set(self, key: str, value: Any) -> None:
+        """
+        Set the config value
+        :param key: Configuration key
+        :param value: Configuration value
+        """
+        self._config[key] = value
+
+        if key.endswith("_dir") and isinstance(value, str):
+            os.makedirs(value, exist_ok=True)
+
 
 
 
